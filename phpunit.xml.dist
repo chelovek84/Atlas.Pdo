@@ -1,12 +1,19 @@
-<phpunit bootstrap="./phpunit.php">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="phpunit.php"
+    convertDeprecationsToExceptions="true"
+    failOnWarning="true"
+>
     <testsuites>
         <testsuite name="atlas/pdo">
-            <directory>./tests</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>

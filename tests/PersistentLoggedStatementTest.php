@@ -8,6 +8,8 @@ use stdClass;
 
 class PersistentLoggedStatementTest extends \PHPUnit\Framework\TestCase
 {
+    protected $connection;
+
     protected $data = [
         1 => 'Anna',
         2 => 'Betty',
@@ -21,7 +23,7 @@ class PersistentLoggedStatementTest extends \PHPUnit\Framework\TestCase
         10 => 'Kara',
     ];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->connection = Connection::new(
             'sqlite::memory:',
@@ -29,6 +31,7 @@ class PersistentLoggedStatementTest extends \PHPUnit\Framework\TestCase
             '',
             [
                 PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_STRINGIFY_FETCHES => true,
             ]
         );
 

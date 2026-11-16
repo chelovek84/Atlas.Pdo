@@ -24,13 +24,14 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         10 => 'Kara',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('pdo_sqlite')) {
             $this->markTestSkipped("Need 'pdo_sqlite' to test in memory.");
         }
 
         $this->pdo = new PDO('sqlite::memory:');
+        $this->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, true);
         $this->connection = new Connection($this->pdo);
 
         $this->connection->exec("CREATE TABLE pdotest (
