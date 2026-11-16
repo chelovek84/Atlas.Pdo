@@ -36,11 +36,12 @@ class PersistentLoggedStatement extends PDOStatement
 
     /* Atttributes */
 
-    public function setAttribute($attribute, $value)
+    public function setAttribute($attribute, $value) : bool
     {
         return $this->parent->setAttribute(...func_get_args());
     }
 
+    #[\ReturnTypeWillChange]
     public function getAttribute($attribute)
     {
         return $this->parent->getAttribute(...func_get_args());
@@ -48,7 +49,7 @@ class PersistentLoggedStatement extends PDOStatement
 
     /* Binding */
 
-    public function bindColumn($column, &$param, $type = 0, $maxlen = 0, $driverdata = null)
+    public function bindColumn($column, &$param, $type = 0, $maxlen = 0, $driverdata = null) : bool
     {
         throw new BadMethodCallException('Cannot call bindColumn() on persistent logged statements.');
     }
@@ -59,7 +60,7 @@ class PersistentLoggedStatement extends PDOStatement
         $data_type = PDO::PARAM_STR,
         $length = 0,
         $driver_options = null
-    ) {
+    ) : bool {
         return $this->parent->bindParam($parameter, $variable, $data_type, $length, $driver_options);
     }
 
@@ -89,26 +90,30 @@ class PersistentLoggedStatement extends PDOStatement
 
     /* Fetching */
 
-    public function setFetchMode($mode, $params = null)
+    #[\ReturnTypeWillChange]
+    public function setFetchMode($mode, ...$args)
     {
         return $this->parent->setFetchMode(...func_get_args());
     }
 
+    #[\ReturnTypeWillChange]
     public function fetch($fetch_style = null, $cursor_orientation = PDO::FETCH_ORI_NEXT, $cursor_offset = 0)
     {
         return $this->parent->fetch(...func_get_args());
     }
 
-    public function fetchAll($fetch_style = null, $fetch_argument = null, $ctor_args = [])
+    public function fetchAll($fetch_style = null, ...$args) : array
     {
         return $this->parent->fetchAll(...func_get_args());
     }
 
+    #[\ReturnTypeWillChange]
     public function fetchColumn($column_number = 0)
     {
         return $this->parent->fetchColumn(...func_get_args());
     }
 
+    #[\ReturnTypeWillChange]
     public function fetchObject($class_name = 'stdClass', $ctor_args = [])
     {
         return $this->parent->fetchObject(...func_get_args());
@@ -116,16 +121,17 @@ class PersistentLoggedStatement extends PDOStatement
 
     /* Metadata */
 
-    public function rowCount()
+    public function rowCount() : int
     {
         return $this->parent->rowCount();
     }
 
-    public function columnCount()
+    public function columnCount() : int
     {
         return $this->parent->columnCount();
     }
 
+    #[\ReturnTypeWillChange]
     public function getColumnMeta($column)
     {
         return $this->parent->getColumnMeta(...func_get_args());
@@ -133,29 +139,29 @@ class PersistentLoggedStatement extends PDOStatement
 
     /* Errors */
 
-    public function errorCode()
+    public function errorCode() : ?string
     {
         return $this->parent->errorCode();
     }
 
-    public function errorInfo()
+    public function errorInfo() : array
     {
         return $this->parent->errorInfo();
     }
 
     /* Other */
 
-    public function closeCursor()
+    public function closeCursor() : bool
     {
         return $this->parent->closeCursor();
     }
 
-    public function debugDumpParams()
+    public function debugDumpParams() : ?bool
     {
         return $this->parent->debugDumpParams();
     }
 
-    public function nextRowset()
+    public function nextRowset() : bool
     {
         return $this->parent->nextRowset();
     }

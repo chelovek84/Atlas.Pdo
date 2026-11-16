@@ -54,7 +54,7 @@ class ConnectionLocator
     }
 
     public function __construct(
-        callable $defaultFactory = null,
+        ?callable $defaultFactory = null,
         array $readFactories = [],
         array $writeFactories = []
     ) {
